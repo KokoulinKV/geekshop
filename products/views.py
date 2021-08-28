@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import json
 
 # Create your views here.
 
@@ -12,20 +13,9 @@ def products(request):
 
 
 def test(request):
-    context = {
-        'title': 'geekshop',
-        'user': 'Ivan',
-        'description': 'Добро пожаловать в GeekShop!',
-        'products': [
-            {'name': 'Худи черного цвета с монограммами adidas Originals', 'price': '6 090,00 руб.'},
-            {'name': 'Синяя куртка The North Face', 'price': '23 725,00 руб.'},
-            {'name': 'Коричневый спортивный oversized-топ ASOS DESIGN', 'price': '3 390,00 руб.'}
-        ],
-        'promotion': True,
-        'products_of_promotion': [
-            {'name': 'Худи черного цвета с монограммами adidas Originals', 'price': '6 090,00 руб.'},
-            {'name': 'Синяя куртка The North Face', 'price': '23 725,00 руб.'}
-        ]
-    }
 
-    return render(request, 'test.html', context)
+    data = 'products/templates/products/products.json'
+    with open(data,'r', encoding='utf-8') as products_json:
+        context = json.load(products_json)
+
+    return render(request, 'products/test.html', context)
