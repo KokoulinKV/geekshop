@@ -4,7 +4,9 @@ from django.shortcuts import render
 
 
 def login(request):
-    return render(request, 'users/login.html')
+    context = {'title':'Login'}
+    return render(request, 'users/login.html', context)
 
 def registration(request):
-    return render(request, 'users/register.html')
+    context = {'title': 'Create Account'}
+    return render(request, 'users/register.html', context)
