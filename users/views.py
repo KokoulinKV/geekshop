@@ -4,8 +4,7 @@ from django.shortcuts import render
 
 
 def login(request):
-    pass
-
+    return render(request, 'users/login.html')
 
 def registration(request):
-    pass
+    return render(request, 'users/register.html')
