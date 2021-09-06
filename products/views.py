@@ -9,12 +9,12 @@ MODULE_DIR = os.path.dirname(__file__)
 
 
 def index(request):
-    return render(request, 'products/index.html')
+    return render(request, 'products/users/templates/products/index.html')
 
 def products(request):
     categories = ProductCategory.objects.all()
     products = Product.objects.all()
-    return render(request, 'products/products.html', locals())
+    return render(request, 'products/users/templates/products/products.html', locals())
 #
 # def products(request):
 #     data = os.path.join(MODULE_DIR, 'fixtures/products.json')
