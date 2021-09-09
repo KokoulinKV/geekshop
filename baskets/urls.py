@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.urls import path
 
-from baskets.views import basket_add
+from baskets.views import baskets_add, baskets_remove
 
 app_name = 'baskets'
 
 urlpatterns = [
-    path('basket_add/<int:id>', basket_add, name='basket_add')
+    path('baskets_add/<int:id>', baskets_add, name='baskets_add'),
+    path('baskets_remove/<int:id>', baskets_remove, name='baskets_remove')
 ]
