@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django import forms
 
 from users.models import User
@@ -45,3 +45,20 @@ class UserRegistrationFrom(UserCreationForm):
         if User.objects.filter(username=data):
             raise forms.ValidationError('This username is already taken!')
         return data
+
+class UserProfileForm(UserChangeForm):
+    first_name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'First name'}))
+    last_name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'Last name'}))
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control py-4', 'readonly': True}))
+    email = forms.CharField(
+        widget=forms.EmailInput(attrs={'class': 'form-control py-4', 'readonly': True}))
+
+    image = forms.ImageField( widget=forms.FileInput(attrs={'class': 'custom-file-input'}), required=False)
+
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name', 'image')
