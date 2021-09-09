@@ -22,9 +22,9 @@ def login(request):
 
     else:
         form = UserLoginForm()
-        context = {'title': 'Login',
+    context = {'title': 'Login',
                        'form': form}
-        return render(request, 'users/login.html', context)
+    return render(request, 'users/login.html', context)
 
 
 def registration(request):
@@ -38,9 +38,9 @@ def registration(request):
 
     else:
         form = UserRegistrationFrom()
-        context = {'title': 'Create Account',
+    context = {'title': 'Create Account',
                    'form': form}
-        return render(request, 'users/register.html', context)
+    return render(request, 'users/register.html', context)
 
 
 def logout(request):
