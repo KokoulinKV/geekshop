@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
+
 from users.forms import UserLoginForm, UserRegistrationFrom, UserProfileForm
+from baskets.models import Basket
 
 
 # Create your views here.
@@ -45,13 +47,16 @@ def logout(request):
 
 def profile(request):
     if request.method == 'POST':
-        form = UserProfileForm(data=request.POST, instance=request.user,files=request.FILES)
+        form = UserProfileForm(data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Update successful!')
             return HttpResponseRedirect(reverse('users:profile'))
     else:
         form = UserProfileForm(instance=request.user)
-    context = {'title': 'Profile',
-               'form': form}
+    context = {
+        'title': 'Profile',
+        'form': form,
+        'baskets': Basket.objects.filter(user=request.user)
+    }
     return render(request, 'users/profile.html', context)
