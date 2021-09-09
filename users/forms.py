@@ -32,3 +32,16 @@ class UserRegistrationFrom(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
+
+
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if User.objects.filter(email=data):
+            raise forms.ValidationError('This email is already taken!')
+        return data
+
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        if User.objects.filter(username=data):
+            raise forms.ValidationError('This username is already taken!')
+        return data
