@@ -20,7 +20,7 @@ def login(request):
     else:
         form = UserLoginForm()
     context = {'title': 'Login',
-                       'form': form}
+               'form': form}
     return render(request, 'users/login.html', context)
 
 
@@ -34,10 +34,15 @@ def registration(request):
     else:
         form = UserRegistrationFrom()
     context = {'title': 'Create Account',
-                   'form': form}
+               'form': form}
     return render(request, 'users/register.html', context)
 
 
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+def profile(request):
+    context = {'title': 'Profile'}
+    return render(request, 'users/profile.html', context)

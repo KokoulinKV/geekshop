@@ -17,10 +17,4 @@ def products(request):
     context['categories'] = ProductCategory.objects.all()
     context['products'] = Product.objects.all()
     return render(request, 'products/products.html', context)
-#
-# def products(request):
-#     data = os.path.join(MODULE_DIR, 'fixtures/products.json')
-#     with open(data, 'r', encoding='utf-8') as products_json:
-#         context = json.load(products_json)
-#
-#     return render(request, 'products/products.html', context)
+
