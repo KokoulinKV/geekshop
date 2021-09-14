@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from users.models import User
 
 
 # Create your views here.
@@ -9,7 +10,10 @@ def index(request):
 
 
 def admins_users(request):
-    context = {'title': 'GeekShop - Admin'}
+    context = {
+        'title': 'GeekShop - Admin',
+        'users': User.objects.all()
+               }
     return render(request, 'admins/admin-users-read.html', context)
 
 
