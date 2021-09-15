@@ -1,4 +1,10 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.contrib.auth.decorators import user_passes_test
+
+from admins.forms import UserAdminsRegistrationForm, UserAdminsProfileForm
+from users.forms import UserProfileForm
 from users.models import User
 
 
@@ -9,24 +15,52 @@ def index(request):
     return render(request, 'admins/admin.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def admins_users(request):
     context = {
         'title': 'GeekShop - Admin',
         'users': User.objects.all()
-               }
+    }
     return render(request, 'admins/admin-users-read.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def admins_users_create(request):
-    context = {'title': 'GeekShop - Admin'}
+    if request.method == 'POST':
+        form = UserAdminsRegistrationForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admins_users'))
+    else:
+        form = UserAdminsRegistrationForm()
+    context = {'title': 'GeekShop - Admin',
+               'form': form}
     return render(request, 'admins/admin-users-create.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def admins_users_update(request, id):
-    context = {'title': 'GeekShop - Admin'}
+    user_select = User.objects.get(id=id)
+    if request.method == 'POST':
+        form = UserAdminsProfileForm(data=request.POST, instance=user_select, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admins_users'))
+    else:
+        form = UserAdminsProfileForm(instance=user_select)
+    context = {
+        'title': 'GeekShop - Admin',
+        'form': form,
+        'user_select': user_select
+    }
     return render(request, 'admins/admin-users-update-delete.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def admins_users_delete(request, id):
-    context = {'title': 'GeekShop - Admin'}
-    return render(request, 'admins/admin-users-update-delete.html', context)
+    user = User.objects.get(id=id)
+    user.delete()
+    # better variant:
+    # user.is_active = False
+    # user.save()
+    return HttpResponseRedirect(reverse('admins:admins_users'))

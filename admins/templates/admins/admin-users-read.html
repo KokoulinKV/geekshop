@@ -34,14 +34,6 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <tr>
-                                    <td><a href="#" style="color: dodgerblue">vokler</a></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-center"><i class="fas fa-check-circle"></i></td>
-                                    <td class="text-center"><i class="fas fa-check-circle"></i></td>
-                                </tr>
                                 {% for user in users %}
                                     <tr>
 
@@ -72,7 +64,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="admin-users-create.html">
+                        <a href="{% url 'admins:admins_users_create' %}">
                             <button class="btn btn-success">Создать пользователя</button>
                         </a>
                     </div>
