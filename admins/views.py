@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import user_passes_test
 
-from admins.forms import UserAdminsRegistrationForm, UserAdminsProfileForm
+from admins.forms import UserAdminsRegistrationForm, UserAdminsProfileForm, ProductAdminsCreationForm
+from products.models import Product
 from users.forms import UserProfileForm
 from users.models import User
 
@@ -64,3 +65,49 @@ def admins_users_delete(request, id):
     # user.is_active = False
     # user.save()
     return HttpResponseRedirect(reverse('admins:admins_users'))
+
+
+def admins_products(request):
+    context = {
+        'title': 'GeekShop - Admin',
+        'products': Product.objects.all()
+    }
+    return render(request, 'admins/admin-products-read.html', context)
+
+def admins_products_create(request):
+    if request.method == 'POST':
+        form = ProductAdminsCreationForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admins_products'))
+    else:
+        form = ProductAdminsCreationForm()
+    context = {'title': 'GeekShop - Admin',
+               'form': form}
+    return render(request, 'admins/admin-products-create.html', context)
+
+
+def admins_products_update(request, id):
+    product_select = Product.objects.get(id=id)
+    if request.method == 'POST':
+        form = ProductAdminsCreationForm(data=request.POST, instance=product_select, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admins_products'))
+    else:
+        form = ProductAdminsCreationForm(instance=product_select)
+    context = {
+        'title': 'GeekShop - Admin',
+        'form': form,
+        'product_select': product_select
+    }
+    return render(request, 'admins/admin-products-update-delete.html', context)
+
+
+def admins_products_delete(request, id):
+    product = Product.objects.get(id=id)
+    product.delete()
+    # better variant:
+    # user.is_active = False
+    # user.save()
+    return HttpResponseRedirect(reverse('admins:admins_products'))

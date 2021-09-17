@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.urls import path
 
-from admins.views import index, admins_users, admins_users_update, admins_users_create, admins_users_delete
+from admins.views import index, admins_users, admins_users_update, admins_users_create, admins_users_delete, \
+    admins_products, admins_products_create, admins_products_update, admins_products_delete
 
 app_name = 'admins'
 
@@ -24,5 +25,10 @@ urlpatterns = [
     path('users/', admins_users, name='admins_users'),
     path('users-update/<int:id>', admins_users_update, name='admins_users_update'),
     path('users-create/', admins_users_create, name='admins_users_create'),
-    path('users-delete/<int:id>', admins_users_delete, name='admins_users_delete')
+    path('users-delete/<int:id>', admins_users_delete, name='admins_users_delete'),
+    path('products/', admins_products, name='admins_products'),
+    path('products-create/', admins_products_create, name='admins_products_create'),
+    path('products-update/<int:id>', admins_products_update, name='admins_products_update'),
+    path('products-delete/<int:id>', admins_products_delete, name='admins_products_delete'),
+
 ]
