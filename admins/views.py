@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import user_passes_test
 
 from admins.forms import UserAdminsRegistrationForm, UserAdminsProfileForm, ProductAdminsCreationForm
-from products.models import Product
+from products.models import Product, ProductCategory
 from users.forms import UserProfileForm
 from users.models import User
 
@@ -60,10 +60,15 @@ def admins_users_update(request, id):
 @user_passes_test(lambda u: u.is_superuser)
 def admins_users_delete(request, id):
     user = User.objects.get(id=id)
-    user.delete()
-    # better variant:
-    # user.is_active = False
-    # user.save()
+    user.is_active = False
+    user.save()
+    return HttpResponseRedirect(reverse('admins:admins_users'))
+
+@user_passes_test(lambda u: u.is_superuser)
+def admins_users_rehub(request, id):
+    user = User.objects.get(id=id)
+    user.is_active = True
+    user.save()
     return HttpResponseRedirect(reverse('admins:admins_users'))
 
 
@@ -107,7 +112,6 @@ def admins_products_update(request, id):
 def admins_products_delete(request, id):
     product = Product.objects.get(id=id)
     product.delete()
-    # better variant:
     # user.is_active = False
     # user.save()
     return HttpResponseRedirect(reverse('admins:admins_products'))

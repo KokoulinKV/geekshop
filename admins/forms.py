@@ -27,12 +27,13 @@ class ProductAdminsCreationForm(forms.ModelForm):
     price = forms.FloatField(
         widget=forms.NumberInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter price'}))
     description = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter description'}))
+        widget=forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter description'}), required=False)
     quantity = forms.IntegerField(
-        widget=forms.NumberInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter quantity in stock'}))
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    category = forms.ChoiceField(choices = [ category for category in (ProductCategory.objects.all()).id], label="", initial='', widget=forms.Select(), required=True)
+        widget=forms.NumberInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter quantity in stock', 'min': 0}))
+    category = forms.ModelChoiceField(queryset = ProductCategory.objects.all(), label='ds',
+        widget=forms.Select(attrs={'class': 'form-control py-4', 'placeholder': 'Enter category'}))
     image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'custom-file-input'}), required=False)
+
 
     class Meta:
         model = Product

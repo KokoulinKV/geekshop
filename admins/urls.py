@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path
 
 from admins.views import index, admins_users, admins_users_update, admins_users_create, admins_users_delete, \
-    admins_products, admins_products_create, admins_products_update, admins_products_delete
+    admins_products, admins_products_create, admins_products_update, admins_products_delete, admins_users_rehub
 
 app_name = 'admins'
 
@@ -30,5 +30,6 @@ urlpatterns = [
     path('products-create/', admins_products_create, name='admins_products_create'),
     path('products-update/<int:id>', admins_products_update, name='admins_products_update'),
     path('products-delete/<int:id>', admins_products_delete, name='admins_products_delete'),
+    path('users_rehub/<int:id>', admins_users_rehub, name='admins_users_rehub'),
 
 ]
