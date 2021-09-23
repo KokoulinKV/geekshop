@@ -2,6 +2,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from admins.forms import UserAdminsRegistrationForm, UserAdminsProfileForm, ProductAdminsCreationForm
 from products.models import Product
@@ -14,14 +17,27 @@ def index(request):
     context = {'title': 'GeekShop - Admin'}
     return render(request, 'admins/admin.html', context)
 
+class UserListView(ListView):
+    model = User
+    template_name = 'admins/admin-users-read.html'
 
-@user_passes_test(lambda u: u.is_superuser)
-def admins_users(request):
-    context = {
-        'title': 'GeekShop - Admin',
-        'users': User.objects.all()
-    }
-    return render(request, 'admins/admin-users-read.html', context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(UserListView, self).get_context_data(**kwargs)
+        context['title'] = 'GeekShop - Admin'
+        return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, request, *args, **kwargs):
+        return super(UserListView, self).dispatch(request, *args, **kwargs)
+
+#
+# @user_passes_test(lambda u: u.is_superuser)
+# def admins_users(request):
+#     context = {
+#         'title': 'GeekShop - Admin',
+#         'users': User.objects.all()
+#     }
+#     return render(request, 'admins/admin-users-read.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)

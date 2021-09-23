@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import os
 
+
 from products.models import Product, ProductCategory
 
 MODULE_DIR = os.path.dirname(__file__)
@@ -13,6 +14,10 @@ MODULE_DIR = os.path.dirname(__file__)
 def index(request):
     context = {'title': 'GeekShop'}
     return render(request, 'products/index.html', context)
+
+
+
+
 
 
 def products(request, id=None, page=1):
