@@ -15,21 +15,29 @@ Including another URLconf
 """
 from django.urls import path
 
-from admins.views import index, admins_users, admins_users_update, admins_users_create, admins_users_delete, \
-    admins_products, admins_products_create, admins_products_update, admins_products_delete, admins_users_rehub
+from admins.views import index, UserListView, UserCreateView, UserAdminView, UserAdminDelete, UserAdminRehub, \
+    ProductListView, ProductCreateView, ProductAdminView, ProductAdminDelete
 
+# admins_users, admins_users_create, admins_users_update, admins_users_delete, admins_users_rehub,
 app_name = 'admins'
 
 urlpatterns = [
     path('', index, name='index'),
-    path('users/', admins_users, name='admins_users'),
-    path('users-update/<int:id>', admins_users_update, name='admins_users_update'),
-    path('users-create/', admins_users_create, name='admins_users_create'),
-    path('users-delete/<int:id>', admins_users_delete, name='admins_users_delete'),
-    path('products/', admins_products, name='admins_products'),
-    path('products-create/', admins_products_create, name='admins_products_create'),
-    path('products-update/<int:id>', admins_products_update, name='admins_products_update'),
-    path('products-delete/<int:id>', admins_products_delete, name='admins_products_delete'),
-    path('users_rehub/<int:id>', admins_users_rehub, name='admins_users_rehub'),
+    path('users/', UserListView.as_view(), name='admins_users'),
+    path('users-update/<int:pk>', UserAdminView.as_view(), name='admins_users_update'),
+    path('users-create/', UserCreateView.as_view(), name='admins_users_create'),
+
+    path('users-delete/<int:pk>', UserAdminDelete.as_view(), name='admins_users_delete'),
+
+    path('products/', ProductListView.as_view(), name='admins_products'),
+    path('products-create/', ProductCreateView.as_view(), name='admins_products_create'),
+    path('products-update/<int:pk>', ProductAdminView.as_view(), name='admins_products_update'),
+    path('products-delete/<int:pk>', ProductAdminDelete.as_view(), name='admins_products_delete'),
+    path('users_rehub/<int:pk>', UserAdminRehub.as_view(), name='admins_users_rehub'),
+    # path('users_rehub/<int:id>', admins_users_rehub, name='admins_users_rehub'),
+    # path('users-delete/<int:id>', admins_users_delete, name='admins_users_delete'),
+    # path('users-create/', admins_users_create, name='admins_users_create'),
+    # path('users-update/<int:id>', admins_users_update, name='admins_users_update'),
+    # path('users/', admins_users, name='admins_users'),
 
 ]
