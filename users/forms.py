@@ -20,6 +20,8 @@ class UserRegistrationFrom(UserCreationForm):
         widget=forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter name'}))
     email = forms.CharField(
         widget=forms.EmailInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter email'}))
+    age = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter your age', 'min': 0}))
     first_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter first name'}))
     last_name = forms.CharField(
@@ -31,8 +33,7 @@ class UserRegistrationFrom(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
-
+        fields = ('username', 'email', 'age', 'first_name', 'last_name', 'password1', 'password2')
 
     def clean_email(self):
         data = self.cleaned_data['email']
@@ -46,6 +47,7 @@ class UserRegistrationFrom(UserCreationForm):
             raise forms.ValidationError('This username is already taken!')
         return data
 
+
 class UserProfileForm(UserChangeForm):
     first_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'First name'}))
@@ -56,9 +58,10 @@ class UserProfileForm(UserChangeForm):
     email = forms.CharField(
         widget=forms.EmailInput(attrs={'class': 'form-control py-4', 'readonly': True}))
 
-    image = forms.ImageField( widget=forms.FileInput(attrs={'class': 'custom-file-input'}), required=False)
-
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'custom-file-input'}), required=False)
+    age = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter your age', 'min': 0}))
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'image')
+        fields = ('username', 'email', 'age', 'first_name', 'last_name', 'image')
