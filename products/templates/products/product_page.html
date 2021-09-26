@@ -1,0 +1,92 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block css %}
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/products.css' %}" rel="stylesheet">
+{% endblock %}
+
+<!-- Page Content -->
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-3">
+
+                <h1 class="my-4">GeekShop</h1>
+                <div class="list-group">
+                    <a href="{% url 'products:index' %}" class="list-group-item">Все товары</a>
+                    {% for category in categories %}
+                        <a href="{% url 'products:category' category.id %}"
+                           class="list-group-item">{{ category.name }}</a>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <!-- /.col-lg-3 -->
+
+            <div class="col-lg-9">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <tbody>
+                        {% for field in product %}
+                            <tr>
+                                <td>
+                                    <div class="card-body">
+                                        <h4>Название:</h4>
+                                        <p class="card-text">
+                                            {{ field.name }}
+                                        </p>
+                                        <h4>Цена:</h4>
+                                        <p class="card-text">{{ field.price }} руб.</p>
+                                        <h4>Описание:</h4>
+                                        <p class="card-text">{{ field.description }}</p>
+                                        <h4>Доступно к заказу:</h4>
+                                        <p class="card-text">{{ field.quantity }} шт.</p>
+                                    </div>
+
+                                    <div class=" text-center">
+                                        <a href="{% url 'baskets:baskets_add' field.id %}" type="button"
+                                           class="btn btn-outline-success">
+                                            Отправить в корзину
+                                        </a>
+                                    </div>
+                                    <div class=" text-center" style="margin-top: 20px">
+                                        <a href="{% url 'products:index' %}" type="button"
+                                           class="btn btn-outline-danger">
+                                            На главную
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="#">
+                                        <img class="card-img-top"
+                                             src="{{ field.image.url }}"
+                                             alt="">
+                                    </a>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- Footer -->
+{% block footer %}
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; GeekShop 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+{% endblock %}
