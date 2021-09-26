@@ -16,10 +16,6 @@ def index(request):
     return render(request, 'products/index.html', context)
 
 
-
-
-
-
 def products(request, id=None, page=1):
     if id != None:
         products_filter = Product.objects.filter(category_id=id)
@@ -39,3 +35,13 @@ def products(request, id=None, page=1):
     }
     context['products'] = products_paginator
     return render(request, 'products/products.html', context)
+
+
+def product_page(request, id):
+    product = Product.objects.filter(id=id)
+    context = {
+        'title': 'GeekShop',
+        'categories': ProductCategory.objects.all(),
+        'product':product
+    }
+    return render(request, 'products/product_page.html', context)
