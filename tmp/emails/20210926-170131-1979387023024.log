@@ -1,0 +1,12 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Follow the link to activate tret account
+From: django@gb.local
+To: tret@gmail.ru
+Date: Sun, 26 Sep 2021 10:01:31 -0000
+Message-ID: <163265049153.16248.17847863553364888391@DESKTOP-OCSH3GN>
+
+To verify tret account on portal 
+ http://localhost:8000/users/verify/tret@gmail.ru/a98870e2e614d884aaf798fb6fe7c150c293d69c
+-------------------------------------------------------------------------------
