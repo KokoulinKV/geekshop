@@ -10,7 +10,7 @@ class UserAdminsRegistrationForm(UserRegistrationFrom):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'image', 'first_name', 'last_name', 'password1', 'password2')
+        fields = ('username', 'email', 'image', 'age', 'first_name', 'last_name', 'password1', 'password2')
 
 
 class UserAdminsProfileForm(UserProfileForm):

@@ -18,6 +18,7 @@
                                     <th>Имя пользователя</th>
                                     <th>Имя</th>
                                     <th>Фамилия</th>
+                                    <th>Возраст</th>
                                     <th>Адрес эл. почты</th>
                                     <th>Персонал сайта</th>
                                     <th>Активный</th>
@@ -28,6 +29,7 @@
                                     <th>Имя пользователя</th>
                                     <th>Имя</th>
                                     <th>Фамилия</th>
+                                    <th>Возраст</th>
                                     <th>Адрес эл. почты</th>
                                     <th>Персонал сайта</th>
                                     <th>Активный</th>
@@ -41,7 +43,9 @@
                                                style="color: dodgerblue">{{ user.username }}</a></td>
                                         <td>{{ user.first_name }}</td>
                                         <td>{{ user.last_name }}</td>
+                                        <td>{{ user.age }}</td>
                                         <td>{{ user.email }}</td>
+
 
                                         <td class="text-center">
                                             {% if user.is_staff %}
