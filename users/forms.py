@@ -81,12 +81,14 @@ class UserProfileForm(UserChangeForm):
 class UserProfileEdition(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('tagline', 'gender', 'about_me')
+        fields = ('tagline', 'gender', 'about_me', 'langs', 'vk_id')
 
     def __init__(self, *args, **kwargs):
         super(UserProfileEdition, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if field_name != 'gender':
                 field.widget.attrs['class'] = 'form-control py-4'
+                if field_name == 'vk_id':
+                    field.widget.attrs['readonly'] = True
             else:
                 field.widget.attrs['class'] = 'form-control'
