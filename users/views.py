@@ -5,7 +5,7 @@ from django.contrib import auth, messages
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from users.forms import UserLoginForm, UserRegistrationFrom, UserProfileForm
+from users.forms import UserLoginForm, UserRegistrationFrom, UserProfileForm, UserProfileEdition
 from baskets.models import Basket
 
 
@@ -54,15 +54,18 @@ def logout(request):
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(data=request.POST, instance=request.user, files=request.FILES)
-        if form.is_valid():
+        profile_form = UserProfileEdition(data=request.POST, instance=request.user.userprofile)
+        if form.is_valid() and profile_form.is_valid():
             form.save()
             messages.success(request, 'Update successful!')
             return HttpResponseRedirect(reverse('users:profile'))
     else:
         form = UserProfileForm(instance=request.user)
+        profile_form = UserProfileEdition(instance=request.user.userprofile)
     context = {
         'title': 'Profile',
         'form': form,
+        'profile_form': profile_form
         # 'baskets': Basket.objects.filter(user=request.user)
     }
     return render(request, 'users/profile.html', context)
