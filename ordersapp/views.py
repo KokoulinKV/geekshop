@@ -1,4 +1,6 @@
 from django.db import transaction
+from django.db.models.signals import pre_save, pre_delete
+from django.dispatch import receiver
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -116,3 +118,19 @@ def order_forming_complete(request, pk):
     order.save()
 
     return HttpResponseRedirect(reverse('ordersapp:list'))
+
+# @receiver(pre_save, sender=Basket)
+# @receiver(pre_save, sender=OrderItem)
+# def product_quantity_update_delete(sender, instance, **kwargs):
+#     if instance.pk:
+#         instance.product.quantity -= instance.quantity - instance.get_item(int(instance.pk))
+#     else:
+#         instance.product.quantity -= instance.quantity
+#     instance.product.save()
+#
+#
+# @receiver(pre_delete, sender=Basket)
+# @receiver(pre_delete, sender=OrderItem)
+# def product_quantity_update_delete(sender, instance, **kwargs):
+#     instance.product.quantity += instance.quantity
+#     instance.product.save()
