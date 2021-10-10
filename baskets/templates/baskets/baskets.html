@@ -19,7 +19,7 @@
                             </div>
                             <div class="col-lg-4">{{ basket.sum }} руб.</div>
                             <div class="col-lg-4">
-                                <a href="{% url 'baskets:baskets_remove' basket.id %}">
+                                <a href="{% url 'baskets:baskets_remove' basket.pk %}">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>
