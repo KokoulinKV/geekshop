@@ -34,6 +34,9 @@ class OrderUpdate(UpdateView):
             formset = OrderFormSet(self.request.POST, instance=self.object)
         else:
             formset = OrderFormSet(instance=self.object)
+            for form in formset:
+                if form.instance.pk:
+                    form.initial['price'] = form.instance.product.price
         context['orderitems'] = formset
         return context
 
@@ -92,6 +95,7 @@ class OrderCreate(CreateView):
                 basket_items.delete()
             else:
                 formset = OrderFormSet()
+
         context['orderitems'] = formset
         return context
 
