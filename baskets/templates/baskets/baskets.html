@@ -19,7 +19,7 @@
                             </div>
                             <div class="col-lg-4">{{ basket.sum }} руб.</div>
                             <div class="col-lg-4">
-                                <a href="{% url 'baskets:baskets_remove' basket.id %}">
+                                <a href="{% url 'baskets:baskets_remove' basket.pk %}">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>
@@ -34,7 +34,7 @@
                 <h4 class="float-right">{{ baskets.0.total_price }} руб.</h4>
             </div>
         </div>
-        <button type="button" class="btn btn-success btn-lg float-right">Оформить</button>
+        <a href="{% url 'ordersapp:create' %}" type="button"  class="btn btn-success btn-lg float-right">Оформить</a>
     {% else %}
         <h4 class="mt-3 mb-3 text-center">
             Корзина пуста

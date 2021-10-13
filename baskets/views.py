@@ -2,6 +2,8 @@ from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView
 
 from products.models import Product
 from baskets.models import Basket
@@ -21,11 +23,10 @@ def baskets_add(request, id):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-@login_required
-def baskets_remove(request, id):
-    Basket.objects.get(id=id).delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+class BasketRemove(DeleteView):
+    model = Basket
+    success_url = reverse_lazy('users:profile')
 
 @login_required
 def baskets_edit(request, id, quantity):

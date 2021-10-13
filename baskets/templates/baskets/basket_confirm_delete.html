@@ -1,0 +1,24 @@
+{% extends 'users/profile.html' %}
+{% load static %}
+
+{% block css %}
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/products.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <div class="p-5">
+            <div class="category_delete">
+                <div class="h3">Уверены, что хотите удалить товар '{{ basket.product.name }}' из корзины?</div>
+                <form action="{% url 'baskets:baskets_remove' basket.pk %}" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-danger" type="submit" value="Удалить">
+                </form>
+                <button class="btn btn-success mt-4">
+                    <a href="{% url 'users:profile' %}">Отмена</a>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

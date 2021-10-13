@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import os
 
+from django.views.generic import DetailView
 
 from products.models import Product, ProductCategory
 
@@ -37,11 +38,12 @@ def products(request, id=None, page=1):
     return render(request, 'products/products.html', context)
 
 
-def product_page(request, id):
-    product = Product.objects.filter(id=id)
-    context = {
-        'title': 'GeekShop',
-        'categories': ProductCategory.objects.all(),
-        'product':product
-    }
-    return render(request, 'products/product_page.html', context)
+class ProductPage(DetailView):
+    model = Product
+    template_name = 'products/product_page.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, category_id=None, *args, **kwargs):
+        context = super().get_context_data()
+        context['categories'] = ProductCategory.objects.all()
+        return context

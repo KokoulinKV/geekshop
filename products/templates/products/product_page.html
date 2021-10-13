@@ -34,24 +34,23 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <tbody>
-                        {% for field in product %}
                             <tr>
                                 <td>
                                     <div class="card-body">
                                         <h4>Название:</h4>
                                         <p class="card-text">
-                                            {{ field.name }}
+                                            {{ product.name }}
                                         </p>
                                         <h4>Цена:</h4>
-                                        <p class="card-text">{{ field.price }} руб.</p>
+                                        <p class="card-text">{{ product.price }} руб.</p>
                                         <h4>Описание:</h4>
-                                        <p class="card-text">{{ field.description }}</p>
+                                        <p class="card-text">{{ product.description }}</p>
                                         <h4>Доступно к заказу:</h4>
-                                        <p class="card-text">{{ field.quantity }} шт.</p>
+                                        <p class="card-text">{{ product.quantity }} шт.</p>
                                     </div>
 
                                     <div class=" text-center">
-                                        <a href="{% url 'baskets:baskets_add' field.id %}" type="button"
+                                        <a href="{% url 'baskets:baskets_add' product.id %}" type="button"
                                            class="btn btn-outline-success">
                                             Отправить в корзину
                                         </a>
@@ -66,13 +65,12 @@
                                 <td>
                                     <a href="#">
                                         <img class="card-img-top"
-                                             src="{{ field.image.url }}"
+                                             src="{{ product.image.url }}"
                                              alt="">
                                     </a>
                                 </td>
 
                             </tr>
-                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

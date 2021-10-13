@@ -17,7 +17,7 @@ from django.urls import path
 
 from django.urls import path
 
-from products.views import products, product_page
+from products.views import products, ProductPage
 
 app_name = 'products'
 
@@ -25,6 +25,6 @@ urlpatterns = [
     path('', products, name='index'),
     path('category/<int:id>', products, name='category'),
     path('page/<int:page>', products, name='page'),
-    path('product_page/<int:id>', product_page, name='product_page')
+    path('product_page/<int:pk>', ProductPage.as_view(), name='product_page')
 
 ]
