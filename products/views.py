@@ -26,17 +26,17 @@ def get_links_category():
     else:
         return ProductCategory.objects.filter(is_active=True)
 
-# def get_product(pk):
-#     if settings.LOW_CACHE:
-#         key = f'product{pk}'
-#         product = cache.get(key)
-#
-#         if product is None:
-#             product = get_object_or_404(Product,pk=pk)
-#             cache.set(key, product)
-#         return product
-#     else:
-#         return get_object_or_404(Product,pk=pk)
+def get_product(pk):
+    if settings.LOW_CACHE:
+        key = f'product{pk}'
+        product = cache.get(key)
+
+        if product is None:
+            product = get_object_or_404(Product,pk=pk)
+            cache.set(key, product)
+        return product
+    else:
+        return get_object_or_404(Product,pk=pk)
 
 
 def get_links_product():
@@ -72,7 +72,7 @@ def products(request, id=None, page=1):
         products_paginator = paginator(paginator.num_pages)
     context = {
         'title': 'GeekShop - Catalog',
-        'categories': get_links_category()
+        'categories': get_links_category(),
     }
     context['products'] = products_paginator
     return render(request, 'products/products.html', context)
@@ -83,7 +83,14 @@ class ProductPage(DetailView):
     template_name = 'products/product_page.html'
     context_object_name = 'product'
 
+    # def get_context_data(self, category_id=None, *args, **kwargs):
+    #     context = super().get_context_data()
+    #     context['categories'] = ProductCategory.objects.all()
+    #     return context
+
     def get_context_data(self, category_id=None, *args, **kwargs):
         context = super().get_context_data()
+
+        context['product'] = get_product(self.kwargs.get('pk'))
         context['categories'] = ProductCategory.objects.all()
         return context
