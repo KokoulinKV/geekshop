@@ -5,14 +5,14 @@ from users.models import User
 from products.models import Product
 
 
-class BasketQuerySet(models.QuerySet):
-
-    def delete(self, *args, **kwargs):
-        for item in self:
-            item.product.quantity -= item.quantity
-            item.product.save()
-        super(BasketQuerySet, self).delete(*args, **kwargs)
-
+# class BasketQuerySet(models.QuerySet):
+#
+#     def delete(self, *args, **kwargs):
+#         for item in self:
+#             item.product.quantity -= item.quantity
+#             item.product.save()
+#         super(BasketQuerySet, self).delete(*args, **kwargs)
+#
 
 class Basket(models.Model):
     objects = BasketQuerySet.as_manager()
@@ -45,11 +45,11 @@ class Basket(models.Model):
     def get_item(pk):
         return Basket.objects.get(pk=pk).quantity
 
-    def delete(self,*args,**kwargs):
-        self.product.quantity += self.quantity
-        self.save()
-        super(Basket, self).delete(*args, **kwargs)
-
-
-    def save(self, *args, **kwargs):
-        super(Basket, self).save(*args, **kwargs)
+    # def delete(self,*args,**kwargs):
+    #     self.product.quantity += self.quantity
+    #     self.save()
+    #     super(Basket, self).delete(*args, **kwargs)
+    #
+    #
+    # def save(self, *args, **kwargs):
+    #     super(Basket, self).save(*args, **kwargs)

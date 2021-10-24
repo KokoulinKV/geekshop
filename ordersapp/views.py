@@ -94,7 +94,7 @@ class OrderCreate(CreateView):
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = basket_items[num].product
                     form.initial['quantity'] = basket_items[num].quantity
-                # basket_items.delete()
+                basket_items.delete()
             else:
                 formset = OrderFormSet()
 
@@ -125,21 +125,21 @@ def order_forming_complete(request, pk):
 
     return HttpResponseRedirect(reverse('ordersapp:list'))
 
-# @receiver(pre_save, sender=Basket)
-# @receiver(pre_save, sender=OrderItem)
-# def product_quantity_update_delete(sender, instance, **kwargs):
-#     if instance.pk:
-#         instance.product.quantity -= instance.quantity - instance.get_item(int(instance.pk))
-#     else:
-#         instance.product.quantity -= instance.quantity
-#     instance.product.save()
-#
-#
-# @receiver(pre_delete, sender=Basket)
-# @receiver(pre_delete, sender=OrderItem)
-# def product_quantity_update_delete(sender, instance, **kwargs):
-#     instance.product.quantity += instance.quantity
-#     instance.product.save()
+@receiver(pre_save, sender=Basket)
+@receiver(pre_save, sender=OrderItem)
+def product_quantity_update_delete(sender, instance, **kwargs):
+    if instance.pk:
+        instance.product.quantity -= instance.quantity - instance.get_item(int(instance.pk))
+    else:
+        instance.product.quantity -= instance.quantity
+    instance.product.save()
+
+
+@receiver(pre_delete, sender=Basket)
+@receiver(pre_delete, sender=OrderItem)
+def product_quantity_update_delete(sender, instance, **kwargs):
+    instance.product.quantity += instance.quantity
+    instance.product.save()
 
 
 def get_product_price(request, pk):
