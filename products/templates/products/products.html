@@ -80,10 +80,17 @@
                                     <p class="card-text">{{ product.category.name }}</p>
                                 </div>
                                 <div class="card-footer text-center">
+                                {% if product.quantity > 0 %}
                                     <a href="{% url 'baskets:baskets_add' product.id %}" type="button"
-                                       {% if product.quantity > 0 %}class="btn btn-outline-success" {% else %}class="btn btn-danger"{% endif %}>
+                                       class="btn btn-outline-success" >
                                         Отправить в корзину
                                     </a>
+                               {% else %}
+                                <a href="{% url 'baskets:baskets_add' product.id %}"
+                                       class="btn btn-danger">
+                                        Отправить в корзину
+                                    </a>
+                                {% endif %}
                                 </div>
                             </div>
                         </div>
